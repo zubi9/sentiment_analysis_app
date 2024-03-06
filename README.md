@@ -2,7 +2,7 @@
 
 Sentiment analysis of Twitter data involves analyzing tweets to determine the overall sentiment expressed, typically as positive, negative. Leveraging natural language processing techniques, machine learning models are trained on labeled datasets to classify sentiments. Twitter, being a microblogging platform, provides a rich source of diverse opinions and emotions, making it ideal for sentiment analysis tasks. This analysis finds applications in understanding public opinion, brand monitoring, market research, and gauging social trends. Moreover, sentiment analysis on Twitter data contributes to sentiment-driven decision-making processes in various domains, ranging from business to politics and beyond
 
-![Sentiment Analysis app](../sentiment_analysis_app/RAD_files/data/web_ui.png)
+![Sentiment Analysis app](RAD_files/data/web_ui.png)
 
 #### Purpose:
 
