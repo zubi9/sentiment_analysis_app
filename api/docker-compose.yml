@@ -1,0 +1,11 @@
+version: "1.1"
+
+services:
+  sentiment_analysis_app:
+    container_name: sentiment_analysis_app
+    image: muhammad546/sentiment_analysis_app
+    ports:
+      - "5000:5000"
+    build:
+      context: .
+      dockerfile: Dockerfile

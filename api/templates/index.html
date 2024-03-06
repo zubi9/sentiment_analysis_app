@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis</title>
+    <style>
+        body {
+            background-image: url('https://images.pexels.com/photos/281260/pexels-photo-281260.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+            background-size: cover; /* Cover the entire viewport */
+            background-position: center; /* Center the background image */
+            font-family: Arial, sans-serif; /* Specify font family */
+            text-align: center; /* Align text to center */
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+        }
+        h1 {
+            font-size: 50px;
+            color: rgb(83, 59, 22);
+            margin-top: 100px; /* Add margin to the top */
+        }
+        form {
+            display: inline-block; /* Display form as inline-block */
+            margin-top: 30px; /* Add margin to the top */
+
+        }
+        p {
+            margin-top: 20px; /* Add margin to the top */
+            color: rgb(14, 13, 13); /* Set text color to white */
+            display: block; /* Display p tag as block-level element */
+            width: 80%; /* Set width to control text wrapping */
+            margin: 0 auto; /* Center the block */
+            padding: 10px; /* Add padding for spacing */
+            background-color: rgba(150, 103, 103, 0.5); /* Semi-transparent background */
+        }
+        button {
+            color: rgb(121, 74, 74);
+            width: 150px; /* Set button width */
+            height: 40px; /* Set button height */
+            font-size: 16px; /* Set font size */
+        }
+    </style>
+</head>
+<body>
+    <h1>Sentiment Analysis</h1>
+    <form method="POST">
+        <textarea id="text" placeholder="Please Enter text here for Sentiment Analysis" name="text" rows="6" cols="30"></textarea><br>
+        <button type="submit">Predict</button>
+    </form>
+    {% if prediction_result and 'error' in prediction_result %}
+        <p><strong>Error:</strong> {{ prediction_result['error'] }}</p>
+    {% elif prediction_result %}
+        <p><strong>Text:</strong> {{ prediction_result['text'] }}</p>
+        <p><strong>Prediction:</strong> {{ prediction_result['label'] }}</p>
+        <p><strong>Class:</strong> {{ prediction_result['pred'] }}</p>
+    {% endif %}
+</body>
+</html>
+
