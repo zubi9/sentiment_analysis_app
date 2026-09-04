@@ -1,86 +1,105 @@
-### Utility.py
+# Twitter Sentiment Analysis Web Application
 
-Sentiment analysis of Twitter data involves analyzing tweets to determine the overall sentiment expressed, typically as positive, negative. Leveraging natural language processing techniques, machine learning models are trained on labeled datasets to classify sentiments. Twitter, being a microblogging platform, provides a rich source of diverse opinions and emotions, making it ideal for sentiment analysis tasks. This analysis finds applications in understanding public opinion, brand monitoring, market research, and gauging social trends. Moreover, sentiment analysis on Twitter data contributes to sentiment-driven decision-making processes in various domains, ranging from business to politics and beyond
+A machine learning web application that classifies Twitter data into **Positive** or **Negative** sentiment using Natural Language Processing (NLP) techniques and a pre-trained model. Built with Python and Flask, and fully containerized with Docker.
 
-![Sentiment Analysis app](RAD_files/data/web_ui.png)
+---
 
-#### Purpose:
+## Features
 
-The `utility.py` file contains functions for preprocessing text data and making sentiment predictions using a pre-trained model. It also includes a dictionary mapping emojis to their meanings and a list of English stopwords.
+* **Text Preprocessing Pipeline:** Handles raw text cleaning, URL and user tag normalization, emoji-to-text translation, lemmatization, and stopword removal.
+* **Sentiment Prediction Engine:** Utilizes a pre-trained ML model to classify incoming text rapidly.
+* **Interactive Web Interface:** Simple Flask-based UI for real-time text analysis.
+* **RESTful API Endpoint:** Supports POST requests via tools like Postman for direct model interactions.
+* **Dockerized Deployment:** Pre-configured Docker Compose file and Docker Hub image for hassle-free containerization.
 
-#### Functions:
+---
 
-1. **Preprocessing Function (`preprocess`):**
-   - This function preprocesses text data by performing the following steps:
-     - Converting text to lowercase.
-     - Replacing URLs with 'URL'.
-     - Replacing emojis with their respective meanings.
-     - Replacing usernames with 'USER'.
-     - Removing non-alphabetic characters.
-     - Reducing consecutive characters to two.
-     - Removing stopwords.
-     - Lemmatizing words.
+## Project Architecture
 
-2. **Prediction Function (`predict`):**
-   - This function predicts the sentiment of input text using a pre-trained model.
-   - It preprocesses the input text using the `preprocess` function.
-   - It then makes predictions using the pre-trained model.
-   - Predictions are converted to human-readable labels ('Negative' or 'Positive').
+### `utility.py`
 
-#### Emojis and Stopwords:
+Contains preprocessing utilities, NLP resources, and inference functions.
 
-- **Emojis Dictionary:**
-  - The file includes a dictionary mapping emojis to their respective meanings. This mapping is used during preprocessing to replace emojis with descriptive labels.
+* **Text Preprocessing (`preprocess`):**
+* Converts text to lowercase.
+* Replaces URLs with `'URL'` and usernames with `'USER'`.
+* Translates emojis into descriptive labels using an internal emoji mapping dictionary.
+* Reduces consecutive repeated characters (e.g., "loooove" $\rightarrow$ "love").
+* Strips non-alphabetic characters, English stopwords, and applies word lemmatization.
 
-- **Stopwords List:**
-  - A list of English stopwords is defined in the file. These stopwords are removed during preprocessing to focus on important words for sentiment analysis.
 
-#### Usage:
+* **Inference Pipeline (`predict`):**
+* Loads the pre-trained model pipeline (`pipeline.pickle`).
+* Passes preprocessed text through the model to output human-readable labels (`Positive` / `Negative`).
 
-- The functions in `utility.py` can be imported into other Python scripts or used interactively.
-- To make predictions, first, load the pre-trained pipeline from the provided pickle file (`pipeline.pickle`), and then use the `predict_pipeline` function with input text.
-- If used interactively, sample text data is provided within the `__main__` block, and predictions are printed to the console.
 
-### Main.py
 
-#### Purpose:
+### `main.py`
 
-The `main.py` file contains the Flask application setup and routes for handling user requests. It integrates the sentiment prediction functionality provided by the `predict_pipeline` function from the `utilities.py` module.
+Drives the Flask web server and routes request traffic.
 
-#### Flask Application Setup:
+* **`/` (GET / POST):** Renders the user web interface and displays real-time sentiment predictions for form inputs.
+* **API Ingestion:** Accepts input payloads via web interface or API testing clients (e.g., Postman).
 
-- The Flask application is initialized with `Flask(__name__)`.
+---
 
-#### Sentiment Prediction Function:
+## Quick Start
 
-- A placeholder function `predict_sentiment` is defined to predict sentiment based on input text.
-- This function utilizes the `predict_pipeline` function from the `utilities.py` module to make sentiment predictions.
-- Input text is passed to the `predict_pipeline` function, and the prediction result is returned.
+### Option 1: Local Setup
 
-#### Routes:
+1. **Clone the Repository:**
+```bash
+git clone https://github.com/zubi9/sentiment_analysis_app.git
+cd sentiment_analysis_app
 
-1. **Index Route (`/`):**
+```
 
-   - This route handles both GET and POST requests.
-   - In the case of a POST request, it retrieves the input text from the form data.
-   - It then calls the `predict_sentiment` function to obtain the sentiment prediction for the input text.
-   - The prediction result is passed to the `index.html` template for rendering.
-   - If there's any error during prediction (e.g., empty input text), an error message is returned.
 
-#### Running the Flask App:
+2. **Install Dependencies:**
+```bash
+pip install -r requirements.txt
 
-- The Flask app is started with `python main.py` method. It listens on all public IPs (`0.0.0.0`) and enables debug mode for development.
+```
 
-you can also run Docker container after pull from the docker hub or clone github repository.
 
-[GITHUB Repo](https://github.com/zubi9/sentiment_analysis_app.git)
+3. **Run the Application:**
+```bash
+python main.py
 
-Doker image can be build using the `Docker-compose.yml` file in the repo.
+```
 
-To run docker container you need to :`docker pull muhammad546/sentiment_analysis_app`
 
-#### Note:
+Access the web app in your browser at `http://localhost:5000`.
 
-- he `predict_pipeline` function is expected to be available in the `utilities.py` file, providing sentiment prediction functionality.
-- The template `index.html` is assumed to be present in the `templates` directory for rendering the web interface.
-ignore app.py for this code you have manually send post request form the api service tools like **postman**
+---
+
+### Option 2: Docker Setup
+
+#### Pull Pre-built Image from Docker Hub
+
+```bash
+docker pull muhammad546/sentiment_analysis_app:latest
+docker run -p 5000:5000 muhammad546/sentiment_analysis_app
+
+```
+
+#### Build with Docker Compose
+
+```bash
+docker-compose up --build
+
+```
+
+---
+
+## API Usage (Postman / cURL)
+
+You can send raw POST requests directly to the prediction endpoint:
+
+* **URL:** `http://localhost:5000/`
+* **Method:** `POST`
+* **Body:** Form Data (`text="Your tweet or sentence here"`)
+
+---
+
+Would you like me to add a sample `requirements.txt` template or add a step-by-step example for testing the endpoint with cURL?
